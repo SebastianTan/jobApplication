@@ -15,6 +15,7 @@
 // React components 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 import type { ApplicationJson, ApplicationStatus } from "@/lib/types";
 import { ApplicationList } from "@/components/application-list";
 import { ApplicationModal } from "@/components/application-modal";
@@ -211,12 +212,20 @@ export function Dashboard() {
                 Track companies, roles, and status through your job search.
               </p>
             </div>
-            <Link
-              href="/backups"
-              className="rounded-lg px-4 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800"
-            >
-              Backups
-            </Link>
+            <div className="flex gap-2">
+              <Link
+                href="/backups"
+                className="rounded-lg px-4 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800"
+              >
+                Backups
+              </Link>
+              <button
+                onClick={() => signOut({ callbackUrl: "/login" })}
+                className="rounded-lg px-4 py-2 text-sm font-medium text-zinc-600 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-800"
+              >
+                Logout
+              </button>
+            </div>
           </div>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             {/* Controlled component: parent owns value; child reports changes via onChange */}
