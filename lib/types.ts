@@ -9,6 +9,7 @@ export const APPLICATION_STATUSES: ApplicationStatus[] = [
   "OFFER",
   "REJECTED",
   "WITHDRAWN",
+  "FOUND",
 ];
 
 export const STATUS_LABELS: Record<ApplicationStatus, string> = {
@@ -18,6 +19,7 @@ export const STATUS_LABELS: Record<ApplicationStatus, string> = {
   OFFER: "Offer",
   REJECTED: "Rejected",
   WITHDRAWN: "Withdrawn",
+  FOUND: "Found",
 };
 
 export type ApplicationJson = Omit<

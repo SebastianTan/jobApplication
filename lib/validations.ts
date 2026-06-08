@@ -7,6 +7,7 @@ const statusSchema = z.enum([
   "OFFER",
   "REJECTED",
   "WITHDRAWN",
+  "FOUND",
 ]);
 
 const optionalUrl = z
@@ -30,7 +31,7 @@ const optionalDate = z
 export const createApplicationSchema = z.object({
   company: z.string().trim().min(1, "Company is required").max(200),
   role: z.string().trim().min(1, "Role is required").max(200),
-  status: statusSchema.optional().default("APPLIED"),
+  status: statusSchema.optional().default("FOUND"),
   appliedAt: optionalDate,
   jobUrl: optionalUrl,
   location: z

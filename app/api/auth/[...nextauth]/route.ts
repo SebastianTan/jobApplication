@@ -2,6 +2,7 @@ import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 
 const { handlers, signIn, signOut, auth } = NextAuth({
+  trustHost: true,
   providers: [
     Credentials({
       credentials: {
@@ -34,7 +35,21 @@ const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
     strategy: "jwt"
   },
-  secret: process.env.NEXTAUTH_SECRET || "your-secret-key-change-in-production"
+  secret: process.env.NEXTAUTH_SECRET || "your-secret-key-change-in-production",
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id
+      }
+      return token
+    },
+    async session({ session, token }) {
+      if (token && session.user) {
+        (session.user as any).id = token.id
+      }
+      return session
+    }
+  }
 })
 
 export const { GET, POST } = handlers
