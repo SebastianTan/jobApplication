@@ -11,27 +11,33 @@ import { useState } from "react";
 import type { ApplicationJson, ApplicationStatus } from "@/lib/types";
 import { APPLICATION_STATUSES, STATUS_LABELS } from "@/lib/types";
 import { JobDescriptionEditor } from "@/components/job-description-editor";
-import { TimeInput } from "@/components/time-input";
 
 export type ApplicationFormValues = {
   company: string;
   role: string;
   status: ApplicationStatus;
-  appliedDate: string;
-  appliedTime: string;
-  appliedAt?: string; // Combined datetime for API submission
+  appliedAt: string;
   jobUrl: string;
   location: string;
   notes: string;
   jobDescription: string;
 };
 
+function getCurrentDateTime(): string {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = (now.getMonth() + 1).toString().padStart(2, "0");
+  const day = now.getDate().toString().padStart(2, "0");
+  const hours = now.getHours().toString().padStart(2, "0");
+  const minutes = now.getMinutes().toString().padStart(2, "0");
+  return `${year}-${month}-${day}T${hours}:${minutes}`;
+}
+
 const emptyValues: ApplicationFormValues = {
   company: "",
   role: "",
   status: "APPLIED",
-  appliedDate: "",
-  appliedTime: "",
+  appliedAt: getCurrentDateTime(),
   jobUrl: "",
   location: "",
   notes: "",
@@ -40,14 +46,11 @@ const emptyValues: ApplicationFormValues = {
 
 function toFormValues(app?: ApplicationJson | null): ApplicationFormValues {
   if (!app) return emptyValues;
-  const appliedDate = app.appliedAt ? app.appliedAt.slice(0, 10) : "";
-  const appliedTime = app.appliedAt ? app.appliedAt.slice(11, 16) : "";
   return {
     company: app.company,
     role: app.role,
     status: app.status,
-    appliedDate,
-    appliedTime,
+    appliedAt: app.appliedAt ? app.appliedAt.slice(0, 16) : "",
     jobUrl: app.jobUrl ?? "",
     location: app.location ?? "",
     notes: app.notes ?? "",
@@ -82,17 +85,9 @@ export function ApplicationForm({
       return;
     }
 
-    // Combine date and time into ISO format for submission
-    const submissionValues = {
-      ...values,
-      appliedAt: values.appliedDate && values.appliedTime
-        ? `${values.appliedDate}T${values.appliedTime}`
-        : "",
-    };
-
     setSubmitting(true);
     try {
-      await onSubmit(submissionValues);
+      await onSubmit(values);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
@@ -149,23 +144,14 @@ export function ApplicationForm({
             ))}
           </select>
         </Field>
-        <Field label="Applied date">
+        <Field label="Applied date & time">
           <input
-            type="date"
-            className={inputClass}
-            value={values.appliedDate}
+            type="datetime-local"
+            className={`${inputClass} text-xs tracking-tighter h-9`}
+            value={values.appliedAt}
             onChange={(e) =>
-              setValues({ ...values, appliedDate: e.target.value })
+              setValues({ ...values, appliedAt: e.target.value })
             }
-          />
-        </Field>
-        <Field label="Applied time">
-          <TimeInput
-            value={values.appliedTime}
-            onChange={(appliedTime) =>
-              setValues({ ...values, appliedTime })
-            }
-            className={inputClass}
           />
         </Field>
       </div>
