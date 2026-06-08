@@ -40,7 +40,7 @@ function toFormValues(app?: ApplicationJson | null): ApplicationFormValues {
     company: app.company,
     role: app.role,
     status: app.status,
-    appliedAt: app.appliedAt ? app.appliedAt.slice(0, 10) : "",
+    appliedAt: app.appliedAt ? app.appliedAt.slice(0, 16) : "",
     jobUrl: app.jobUrl ?? "",
     location: app.location ?? "",
     notes: app.notes ?? "",
@@ -134,9 +134,9 @@ export function ApplicationForm({
             ))}
           </select>
         </Field>
-        <Field label="Applied date">
+        <Field label="Applied date & time">
           <input
-            type="date"
+            type="datetime-local"
             className={inputClass}
             value={values.appliedAt}
             onChange={(e) =>
@@ -146,29 +146,31 @@ export function ApplicationForm({
         </Field>
       </div>
 
-      <Field label="Job posting URL">
-        <input
-          type="url"
-          className={inputClass}
-          value={values.jobUrl}
-          onChange={(e) => setValues({ ...values, jobUrl: e.target.value })}
-          placeholder="https://..."
-        />
-      </Field>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Field label="Job posting URL">
+          <input
+            type="url"
+            className={inputClass}
+            value={values.jobUrl}
+            onChange={(e) => setValues({ ...values, jobUrl: e.target.value })}
+            placeholder="https://..."
+          />
+        </Field>
 
-      <Field label="Location">
-        <input
-          className={inputClass}
-          value={values.location}
-          onChange={(e) => setValues({ ...values, location: e.target.value })}
-          placeholder="Remote, San Francisco, ..."
-          maxLength={200}
-        />
-      </Field>
+        <Field label="Location">
+          <input
+            className={inputClass}
+            value={values.location}
+            onChange={(e) => setValues({ ...values, location: e.target.value })}
+            placeholder="Remote, San Francisco, ..."
+            maxLength={200}
+          />
+        </Field>
+      </div>
 
       <Field label="Notes">
         <textarea
-          className={`${inputClass} min-h-24 resize-y`}
+          className={`${inputClass} min-h-12 resize-y`}
           value={values.notes}
           onChange={(e) => setValues({ ...values, notes: e.target.value })}
           placeholder="Interview dates, recruiter name, etc."

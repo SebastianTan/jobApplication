@@ -3,13 +3,13 @@ import type { Application, ApplicationStatus } from "@prisma/client";
 export type { Application, ApplicationStatus };
 
 export const APPLICATION_STATUSES: ApplicationStatus[] = [
+  "FOUND",
   "APPLIED",
   "SCREENING",
   "INTERVIEW",
   "OFFER",
   "REJECTED",
   "WITHDRAWN",
-  "FOUND",
 ];
 
 export const STATUS_LABELS: Record<ApplicationStatus, string> = {

@@ -81,18 +81,11 @@ export function JobDescriptionEditor({
           </span>
         )}
       </div>
-      <p className="text-xs text-zinc-500 dark:text-zinc-400">
-        Stored as a markdown file under{" "}
-        <code className="rounded bg-zinc-100 px-1 dark:bg-zinc-800">
-          data/job-descriptions/
-        </code>
-        ; the database keeps the file path only.
-      </p>
       {loading ? (
         <p className="text-sm text-zinc-500">Loading description…</p>
       ) : (
         <textarea
-          className={`${inputClass} min-h-40 resize-y font-mono text-xs leading-relaxed`}
+          className={`${inputClass} min-h-15 resize-y font-mono text-xs leading-relaxed`}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder="Paste the job posting, requirements, responsibilities…"
