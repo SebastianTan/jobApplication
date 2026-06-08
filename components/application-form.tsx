@@ -11,12 +11,15 @@ import { useState } from "react";
 import type { ApplicationJson, ApplicationStatus } from "@/lib/types";
 import { APPLICATION_STATUSES, STATUS_LABELS } from "@/lib/types";
 import { JobDescriptionEditor } from "@/components/job-description-editor";
+import { TimeInput } from "@/components/time-input";
 
 export type ApplicationFormValues = {
   company: string;
   role: string;
   status: ApplicationStatus;
-  appliedAt: string;
+  appliedDate: string;
+  appliedTime: string;
+  appliedAt?: string; // Combined datetime for API submission
   jobUrl: string;
   location: string;
   notes: string;
@@ -27,7 +30,8 @@ const emptyValues: ApplicationFormValues = {
   company: "",
   role: "",
   status: "APPLIED",
-  appliedAt: "",
+  appliedDate: "",
+  appliedTime: "",
   jobUrl: "",
   location: "",
   notes: "",
@@ -36,11 +40,14 @@ const emptyValues: ApplicationFormValues = {
 
 function toFormValues(app?: ApplicationJson | null): ApplicationFormValues {
   if (!app) return emptyValues;
+  const appliedDate = app.appliedAt ? app.appliedAt.slice(0, 10) : "";
+  const appliedTime = app.appliedAt ? app.appliedAt.slice(11, 16) : "";
   return {
     company: app.company,
     role: app.role,
     status: app.status,
-    appliedAt: app.appliedAt ? app.appliedAt.slice(0, 16) : "",
+    appliedDate,
+    appliedTime,
     jobUrl: app.jobUrl ?? "",
     location: app.location ?? "",
     notes: app.notes ?? "",
@@ -75,9 +82,17 @@ export function ApplicationForm({
       return;
     }
 
+    // Combine date and time into ISO format for submission
+    const submissionValues = {
+      ...values,
+      appliedAt: values.appliedDate && values.appliedTime
+        ? `${values.appliedDate}T${values.appliedTime}`
+        : "",
+    };
+
     setSubmitting(true);
     try {
-      await onSubmit(values);
+      await onSubmit(submissionValues);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
@@ -134,14 +149,23 @@ export function ApplicationForm({
             ))}
           </select>
         </Field>
-        <Field label="Applied date & time">
+        <Field label="Applied date">
           <input
-            type="datetime-local"
+            type="date"
             className={inputClass}
-            value={values.appliedAt}
+            value={values.appliedDate}
             onChange={(e) =>
-              setValues({ ...values, appliedAt: e.target.value })
+              setValues({ ...values, appliedDate: e.target.value })
             }
+          />
+        </Field>
+        <Field label="Applied time">
+          <TimeInput
+            value={values.appliedTime}
+            onChange={(appliedTime) =>
+              setValues({ ...values, appliedTime })
+            }
+            className={inputClass}
           />
         </Field>
       </div>
