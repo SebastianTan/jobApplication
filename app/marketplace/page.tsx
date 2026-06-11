@@ -10,7 +10,7 @@ import { useState } from "react";
 
 export default function Marketplace() {
   const [blurEnabled, setBlurEnabled] = useState(true);
-  const totalImages = 18; // 6 columns x 3 rows
+  const totalImages = 30; // 6 columns x 5 rows
   const visibleRows = 2; // First 2 rows are visible
   const visibleImages = visibleRows * 6; // 12 images
 
@@ -29,7 +29,7 @@ export default function Marketplace() {
           </button>
         </div>
 
-        <div className="grid grid-cols-6 gap-4">
+        <div className="relative grid grid-cols-6 gap-4">
           {Array.from({ length: totalImages }).map((_, index) => {
             const isBlurred = blurEnabled && index >= visibleImages;
             return (
@@ -41,35 +41,35 @@ export default function Marketplace() {
                 <img
                   src="https://placehold.co/200x200/333333/808080?text=T-Shirt"
                   alt="T-Shirt"
-                  className={`h-full w-full rounded-lg object-cover ${
-                    isBlurred ? "blur-sm" : ""
-                  }`}
+                  className="h-full w-full rounded-lg object-cover"
                 />
-
-                {/* Lock overlay for blurred rows */}
-                {isBlurred && (
-                  <div className="absolute inset-0 z-50 flex flex-col items-center justify-start pt-8 rounded-lg bg-zinc-900/60 backdrop-blur-sm">
-                    <svg
-                      className="h-8 w-8 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                      />
-                    </svg>
-                    <p className="text-sm font-medium text-zinc-100">
-                      Login to see more
-                    </p>
-                  </div>
-                )}
               </div>
             );
           })}
+
+          {/* Single lock overlay for blurred section */}
+          {blurEnabled && (
+            <div className="absolute left-1/2 -translate-x-1/2 w-screen top-[40%] flex flex-col items-center justify-start pt-8 backdrop-blur-sm blur-overlay">
+              <div className="flex flex-col items-center">
+                <svg
+                  className="mb-2 h-8 w-8 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                  />
+                </svg>
+                <p className="text-sm font-medium text-zinc-100">
+                  Login to see more
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
