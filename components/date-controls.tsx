@@ -8,7 +8,7 @@
 import type { DateFilterState, DateSortField, SortDirection } from "@/lib/application-filters";
 
 const selectClass =
-  "rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm outline-none focus:border-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:focus:border-zinc-500";
+  "rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm outline-none focus:border-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:focus:border-zinc-500 min-w-[140px]";
 
 const inputClass =
   "rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm text-zinc-900 shadow-sm outline-none focus:border-zinc-400 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:focus:border-zinc-500";
@@ -80,9 +80,9 @@ export function DateControls({
           />
         </label>
         <label className="space-y-1">
-          <span className="text-xs font-medium text-zinc-600 dark:text-zinc-400">
+          <span className="text-xs font-medium text-zinc-600 dark:text-zinc-400 min-w-[80px] inline-block">
             Sort by
-          </span>
+          </span> 
           <select
             className={selectClass}
             value={sortField}
@@ -96,9 +96,10 @@ export function DateControls({
           </select>
         </label>
         <label className="space-y-1">
-          <span className="text-xs font-medium text-zinc-600 dark:text-zinc-400">
+          <span className="text-xs font-medium text-zinc-600 dark:text-zinc-400 min-w-[80px] inline-block">
             Order
           </span>
+    
           <select
             className={selectClass}
             value={sortDirection}
