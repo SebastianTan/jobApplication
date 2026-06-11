@@ -27,5 +27,7 @@ body {
 
 .blur-overlay {
   height: calc(800px + 200px); /* temp */
-  background: linear-gradient(to bottom, rgba(24, 24, 27, 0) 0%, rgba(24, 24, 27, 0.6) 100px, rgba(24, 24, 27, 0.6) 100%);
+  background: linear-gradient(to bottom, rgba(24, 24, 27, 0) 0%, rgba(24, 24, 27, 0.1) 50px, rgba(24, 24, 27, 0.4) 100px, rgba(24, 24, 27, 0.6) 150px, rgba(24, 24, 27, 0.6) 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 50px, black 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 50px, black 100%);
 }
