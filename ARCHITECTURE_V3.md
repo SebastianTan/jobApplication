@@ -25,7 +25,7 @@ RESTful endpoints handle CRUD operations:
 All endpoints use Zod validation and return JSON responses with error handling.
 
 ## Authentication
-Middleware (`middleware.ts`) protects all routes except `/login` and `/api/auth/*`. NextAuth uses a credentials provider with hardcoded credentials (admin/password) for demo purposes. Sessions use JWT strategy.
+Middleware (`middleware.ts`) protects all routes except `/login` and `/api/auth/*`. NextAuth uses a credentials provider with hardcoded credentials for demo purposes. Sessions use JWT strategy.
 
 ## State Management
 The Dashboard component uses React hooks (`useState`, `useEffect`, `useMemo`) to manage application data, filters, and modal states. Child components are controlled—the parent owns the state and children report changes via callbacks. Date filtering and sorting happen client-side after fetching to reduce API calls.

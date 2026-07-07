@@ -16,7 +16,7 @@ export default function Marketplace() {
 
   return (
     <div className="min-h-screen bg-zinc-50 p-8 dark:bg-zinc-900">
-      <div className="mx-auto max-w-[800px]">
+      <div className="mx-auto max-w-[800px] min-h-[75%]" id="setup-box">
         <div className="mb-8 flex items-center justify-between">
           <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50">
             Marketplace

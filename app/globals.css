@@ -31,3 +31,7 @@ body {
   mask-image: linear-gradient(to bottom, transparent 0%, black 50px, black 100%);
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 50px, black 100%);
 }
+
+.setup-modal {
+  background-color: #4242e1;
+}
